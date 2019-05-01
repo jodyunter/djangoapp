@@ -1,4 +1,5 @@
 from django.db import models
+from random import random
 
 class Team(models.Model):
     name = models.CharField(max_length=200)
@@ -17,7 +18,7 @@ class Player(models.Model):
     goals = models.IntegerField(default=0)
     assists = models.IntegerField(default=0)    
 
-    def __str__(self):
+    def __str__(self):        
         return "%s %s %d %d %d" % (self.team.name, self.name, self.skill,  self.goals, self.assists)
 
 class Game(models.Model):
@@ -27,6 +28,11 @@ class Game(models.Model):
     day = models.IntegerField()    
     homeScore  = models.IntegerField(default=0)
     awayScore = models.IntegerField(default=0)
+
+    def play(self):
+        difference = self.awayTeam..homeTeam.level - self.awayTeam.level        
+        self.homeScore = random.randint(0, self.homeTeam.level + difference)
+        self.awayScore = random.randint(0, self.awayTeam.level - difference)
 
     def __str__(self):
         return "%d-%d %s %d - %d %s" % (self.year, self.day, self.homeTeam.name, self.homeScore, self.awayScore, self.awayTeam.name)
