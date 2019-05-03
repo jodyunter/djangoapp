@@ -22,18 +22,19 @@ class Player(models.Model):
         return "%s %s %d %d %d" % (self.team.name, self.name, self.skill,  self.goals, self.assists)
 
 class Game(models.Model):
-    homeTeam = models.ForeignKey(Team, related_name='homeTeam', on_delete=models.CASCADE)
-    awayTeam = models.ForeignKey(Team, related_name='awayTeam', on_delete=models.CASCADE)
+    homeTeam = models.ForeignKey(Team, related_name='homeTeam_set', on_delete=models.CASCADE)
+    awayTeam = models.ForeignKey(Team, related_name='awayTeam_set', on_delete=models.CASCADE)
     year = models.IntegerField()
     day = models.IntegerField()    
     homeScore  = models.IntegerField(default=0)
     awayScore = models.IntegerField(default=0)
 
-    def play(self):
-        difference = self.awayTeam..homeTeam.level - self.awayTeam.level        
-        self.homeScore = random.randint(0, self.homeTeam.level + difference)
-        self.awayScore = random.randint(0, self.awayTeam.level - difference)
-
     def __str__(self):
         return "%d-%d %s %d - %d %s" % (self.year, self.day, self.homeTeam.name, self.homeScore, self.awayScore, self.awayTeam.name)
+
+            
+    def play(self):                             
+        difference = self.homeTeam.level - self.awayTeam.level
+        self.homeScore = random.randint(0, self.homeTeam.level + difference)
+        self.awayScore = random.randint(0, self.awayTeam.level - difference)
     
